@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require 'mail'
+
+message = <<-eos
+<html>
+  <head>
+  </head>
+  <body>
+    <p>Sample Email demonstrating a broken link. <a href="http://github.com/sj26/mailcatcher">Mailcatcher</a></p>
+  </body>
+</html>
+eos
+
+Mail.defaults do
+  delivery_method :smtp, {port: 1025}
+end
+
+Mail.deliver do
+  from 'from@example.com'
+  to 'to@example.com'
+  subject 'Test Message'
+  html_part do
+    content_type 'text/html; charset=UTF-8'
+    content_transfer_encoding 'quoted-printable'
+    body message
+  end
+end

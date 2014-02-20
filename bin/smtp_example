@@ -1,0 +1,16 @@
+#!/bin/bash
+# A sensible person would use expect but I'm not.
+
+(
+echo "HELO example.com"
+sleep 1
+echo "MAIL FROM:<smtp_script@s.se>"
+sleep 1
+echo "RCPT TO:<b@b.bz>"
+sleep 1
+echo "DATA"
+sed "s;^\.;\.\.;" $1
+echo "."
+sleep 1
+echo QUIT
+) | telnet localhost 1025
